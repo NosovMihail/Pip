@@ -173,8 +173,8 @@
         <tr height = "10%" width="100%" style = "background-color: #CC4230">
             <td width="12%" rowspan="3"></td>
             <th width="76%" align="left" id="header" colspan="3">
-                <span dir="ltr">Носов Михаил, P3212</span>
-                <span dir="rtl" id="var"> вариант 212017</span></th>
+                <span dir="ltr">Носов Михаил, Александр Максимов P3212</span>
+                <span dir="rtl" id="var"> вариант 1221</span></th>
             <td width="12%" rowspan="3"></td>
         </tr>
         <tr>
@@ -184,13 +184,10 @@
                         <span>X:</span>
                         <script>
                             function xCheck(x) {
-                                console.log("Вызвали функцию xCheck")
                                 x0 = x
-                                console.log(x0)
                             }
                             function rCheck(r) {
                                 r0 = r
-                                console.log(r0)
                             }
                         </script>
                         <button type="button" class="xValue" onclick="xCheck(-2)" value="-2">-2</button>
