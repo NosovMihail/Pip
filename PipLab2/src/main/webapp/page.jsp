@@ -6,7 +6,7 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script>
-        var x0, y0, r0
+        var x0, y0, r0, x, y
         $( document ).ready(function() {
             document.getElementById("btn").onclick =
                 function(){
@@ -20,7 +20,7 @@
 
         function sendAjaxForm(results, math_form, url) {
             //validate_form('math_form')
-            if(true){
+            if(validate_form('math_form')){
                 document.getElementById('X').style.background = 'rgb(255, 255, 255)';
                 document.getElementById('Y').style.background = 'rgb(255, 255, 255)';
                 document.getElementById('R').style.background = 'rgb(255, 255, 255)';
@@ -47,7 +47,7 @@
         {
             valid = true;
 
-            if ((isNaN(x0)||(x0 == 0)||(x0 == -1)||(x0 == 1)||(x0 == -1.5)||(x0 == 1.5)||(x0 == 2)||(x0 == -2)||(x0 == -0.5)||(x0 == 0.5)))
+            if (isNaN(x0)||(x0 != 0)&&(x0 != -1)&&(x0 != 1)&&(x0 != -1.5)&&(x0 != 1.5)&&(x0 != 2)&&(x0 != -2)&&(x0 != -0.5)&&(x0 != 0.5))
             {
                 document.getElementById('X').style.background = 'rgb(255, 100, 100)';
                 valid = false;
@@ -57,7 +57,7 @@
                 document.getElementById('Y').style.background = 'rgb(255, 100, 100)';
                 valid = false;
             }
-            if (isNaN(r0)||(r0 == 1.5)||(r0 == 1)||(r0 == 2)||(r0 == 2.5)||(r0 == 3))
+            if (isNaN(r0)||(r0 != 1.5)&&(r0 != 1)&&(r0 != 2)&&(r0 != 2.5)&&(r0 != 3))
             {
                 document.getElementById('R').style.background = 'rgb(255, 100, 100)';
                 valid = false;
@@ -269,8 +269,8 @@
                                 var cordX = 0;
                                 cord.x -= pos.left
                                 cord.y -= pos.top;
-                                var x = (((cord.x - 132)/102)*R*2).toFixed()/2;
-                                var y = (((cord.y - 133)/101)*(-1)*R)
+                                x = (((cord.x - 132)/102)*R*2).toFixed()/2;
+                                y = (((cord.y - 133)/101)*(-1)*R);
                                 if(x > 2){
                                     x = 2;
                                 }
@@ -293,7 +293,16 @@
                                 cx.strokeStyle = 'red';
                                 cx.stroke();
                                 //console.log(cordX + " " + x + " " + cord.x + " " + cord.y);
-                            } else {
+                            }
+                        })
+                        document.getElementById("canvas").addEventListener("click", function(e){
+                            if(r0 != undefined){
+                                x0 = x;
+                                document.getElementById("Y").value = y;
+                                console.log(x0 + " " + document.getElementById("Y").value + " " + r0);
+                                sendAjaxForm('results', 'math_form', 'Controller');
+                                return false;
+                            }else {
                                 document.getElementById('R').style.background = 'rgb(255, 100, 100)';
                             }
                         })

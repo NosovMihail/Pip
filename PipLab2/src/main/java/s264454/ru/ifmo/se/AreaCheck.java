@@ -35,9 +35,9 @@ public class AreaCheck  extends HttpServlet {
 
     private int check(HttpServletRequest req){
         try{
-            int x = Integer.parseInt(req.getParameter("X"));
-            int y = Integer.parseInt(req.getParameter("Y"));
-            int r = Integer.parseInt(req.getParameter("R"));
+            double x = Double.parseDouble(req.getParameter("X"));
+            double y = Double.parseDouble(req.getParameter("Y"));
+            double r = Double.parseDouble(req.getParameter("R"));
             if(x > 0){
                 if(y < 0){
                     return 0;
