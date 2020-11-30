@@ -4,6 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -19,6 +20,20 @@ public class AreaCheck  extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
+        HttpSession ses =req.getSession();
+        int count;
+        try {
+            if ((Integer) (ses.getAttribute("count")) > 0) {
+                count = (Integer) ses.getAttribute("count");
+            } else {
+                count = 0;
+            }
+        }catch(NullPointerException e){
+            count = 0;
+        }
+        ses.setAttribute("X"+count,req.getParameter("X"));
+        ses.setAttribute("Y"+count,req.getParameter("Y"));
+        ses.setAttribute("R"+count,req.getParameter("R"));
         int a = check(req);
         String answer = "";
         if(a == 0){
@@ -30,7 +45,12 @@ public class AreaCheck  extends HttpServlet {
         if(a == 2){
             answer = "Well done. Here come the test results: You are a horrible person. I'm serious, that's what it says: A horrible person. We weren't even testing for that.";
         }
-        out.print("<b>X: " + req.getParameter("X") + " Y: " + req.getParameter("Y") + " R: " + req.getParameter("R") + " " + answer + "</b><br>");
+        ses.setAttribute("A"+count, answer);
+        ses.setAttribute("count", count+1);
+        for(int i = 0; i <= count; i++) {
+            System.out.println(i);
+            out.print("<b>X: " + ses.getAttribute("X"+i) + " Y: " + ses.getAttribute("Y"+i) + " R: " + ses.getAttribute("R"+i) + " " + ses.getAttribute("A"+i) + "</b><br>");
+        }
     }
 
     private int check(HttpServletRequest req){

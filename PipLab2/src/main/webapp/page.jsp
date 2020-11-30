@@ -6,13 +6,14 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script>
-        var x0, y0, r0, x, y
+        var x0, y0, r0, x, y, cordX, cordY;
+        var cordsX = [], cordsY = [];
         $( document ).ready(function() {
             document.getElementById("btn").onclick =
                 function(){
-                    console.log(x0)
-                    console.log($('#Y'))
-                    console.log(r0)
+                    console.log(x0);
+                    console.log($('#Y'));
+                    console.log(r0);
                     sendAjaxForm('results', 'math_form', 'Controller');
                     return false;
                 };
@@ -24,10 +25,10 @@
                 document.getElementById('X').style.background = 'rgb(255, 255, 255)';
                 document.getElementById('Y').style.background = 'rgb(255, 255, 255)';
                 document.getElementById('R').style.background = 'rgb(255, 255, 255)';
-                console.log("Отправляем")
-                console.log(x0)
-                console.log($('#Y'))
-                console.log(r0)
+                console.log("Отправляем");
+                console.log(x0);
+                console.log($('#Y'));
+                console.log(r0);
                 $.post(
                     url, //url страницы (action_ajax_form.php)
                     {
@@ -266,7 +267,7 @@
                                 cx.clearRect(0,0,268,267);
                                 cx.drawImage(img, 0, 0);
                                 var R = r0;
-                                var cordX = 0;
+                                cordX = 0;
                                 cord.x -= pos.left
                                 cord.y -= pos.top;
                                 x = (((cord.x - 132)/102)*R*2).toFixed()/2;
@@ -292,6 +293,15 @@
                                 cx.lineWidth = 1;
                                 cx.strokeStyle = 'red';
                                 cx.stroke();
+                                for(i = 0; i < cordsX.length; i++){
+                                    cx.beginPath();
+                                    cx.arc(cordsX[i], cordsY[i], 3, 0, 2*Math.PI, false);
+                                    cx.fillStyle = 'red';
+                                    cx.fill();
+                                    cx.lineWidth = 1;
+                                    cx.strokeStyle = 'red';
+                                    cx.stroke();
+                                }
                                 //console.log(cordX + " " + x + " " + cord.x + " " + cord.y);
                             }
                         })
@@ -299,6 +309,8 @@
                             if(r0 != undefined){
                                 x0 = x;
                                 document.getElementById("Y").value = y;
+                                cordsX.push(cordX);
+                                cordsY.push(cordY);
                                 console.log(x0 + " " + document.getElementById("Y").value + " " + r0);
                                 sendAjaxForm('results', 'math_form', 'Controller');
                                 return false;
