@@ -201,68 +201,60 @@
                 <input type="submit" id="btn" value="Отправить">
             </td>
             <td width="30%">
-                <img id="pic" src="pic2.png" alt="Тут картинка">
-<%--                <canvas id="canvas" width="268" height="267">--%>
-<%--                    <img id="picture" src="pic2.png" alt="Тут картинка">--%>
-<%--                    <%--%>
+                                <canvas id="canvas" width="268" height="267">
+                                </canvas>
+                                <script>
+                                function getPosition(e){
+                                var x = y = 0;
 
-<%--                    %>--%>
-<%--                </canvas>--%>
-<%--                <script>--%>
-<%--                function getPosition(e){--%>
-<%--                var x = y = 0;--%>
+                                if (!e) {
+                                var e = window.event;
+                                }
 
-<%--                if (!e) {--%>
-<%--                var e = window.event;--%>
-<%--                }--%>
+                                if (e.pageX || e.pageY){
+                                x = e.pageX;
+                                y = e.pageY;
+                                } else if (e.clientX || e.clientY){
+                                x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+                                y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+                                }
 
-<%--                if (e.pageX || e.pageY){--%>
-<%--                x = e.pageX;--%>
-<%--                y = e.pageY;--%>
-<%--                } else if (e.clientX || e.clientY){--%>
-<%--                x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;--%>
-<%--                y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;--%>
-<%--                }--%>
-
-<%--                return {x: x, y: y}--%>
-<%--                }--%>
-
-
-
-<%--                // Отслеживание события загрузки страницы--%>
-<%--                window.addEventListener('load', function() {--%>
-<%--                var cx = document.getElementById("canvas").getContext("2d");--%>
-<%--                // Создание объекта картинки--%>
-<%--                let img = new Image();--%>
-<%--                // Назначение путь до картинки--%>
-<%--                img.src = "pic2.png";--%>
-<%--                // Вывод картинки--%>
-<%--                cx.drawImage(img, 0, 0);--%>
-<%--                $('body').mousemove(function(e){--%>
-<%--                var cord = getPosition(e);--%>
-<%--                cx.clearRect(0,0,268,267);--%>
-<%--                cx.drawImage(img, 0, 0);--%>
-<%--                var R = 3;--%>
-<%--                var cordX = 0;--%>
-<%--                var x = (((cord.x - 132)/102)*R*2).toFixed()/2;--%>
-<%--                if(x > 2){--%>
-<%--                x = 2;--%>
-<%--                }--%>
-<%--                if(x < -2){--%>
-<%--                x = -2;--%>
-<%--                }--%>
-<%--                cordX = 132 + parseFloat((102*x/R).toFixed());--%>
-<%--                cx.beginPath();--%>
-<%--                cx.arc(cordX, cord.y, 3, 0, 2*Math.PI, false);--%>
-<%--                cx.fillStyle = 'red';--%>
-<%--                cx.fill();--%>
-<%--                cx.lineWidth = 1;--%>
-<%--                cx.strokeStyle = 'red';--%>
-<%--                cx.stroke();--%>
-<%--                //console.log(cordX + " " + x + " " + cord.x + " " + cord.y);--%>
-<%--                })--%>
-<%--                });--%>
-<%--                </script>--%>
+                                return {x: x, y: y}
+                                }
+                                // Отслеживание события загрузки страницы
+                                window.addEventListener('load', function() {
+                                var cx = document.getElementById("canvas").getContext("2d");
+                                // Создание объекта картинки
+                                var img = new Image();
+                                // Назначение путь до картинки
+                                img.src = "${pageContext.request.contextPath}/images/pic2.png";
+                                // Вывод картинки
+                                cx.drawImage(img, 0, 0);
+                                $('body').mousemove(function(e){
+                                var cord = getPosition(e);
+                                cx.clearRect(0,0,268,267);
+                                cx.drawImage(img, 0, 0);
+                                var R = 3;
+                                var cordX = 0;
+                                var x = (((cord.x - 132)/102)*R*2).toFixed()/2;
+                                if(x > 2){
+                                x = 2;
+                                }
+                                if(x < -2){
+                                x = -2;
+                                }
+                                cordX = 132 + parseFloat((102*x/R).toFixed());
+                                cx.beginPath();
+                                cx.arc(cordX, cord.y, 3, 0, 2*Math.PI, false);
+                                cx.fillStyle = 'red';
+                                cx.fill();
+                                cx.lineWidth = 1;
+                                cx.strokeStyle = 'red';
+                                cx.stroke();
+                                //console.log(cordX + " " + x + " " + cord.x + " " + cord.y);
+                                })
+                                });
+                                </script>
             </td>
             <td width="26%">
                 <span id="egg">Easter egg</span>
