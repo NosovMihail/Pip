@@ -259,7 +259,7 @@
                         // Назначение путь до картинки
                         img.src = "${pageContext.request.contextPath}/images/pic2.png";
                         // Вывод картинки
-                        cx.drawImage(img, 0, 0);
+                        img.onload = function (ev) { cx.drawImage(img, 0, 0); };
                         $('body').mousemove(function(e){
                             if(r0 != undefined){
                                 var cord = getPosition(e);
