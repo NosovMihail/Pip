@@ -6,25 +6,35 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script>
+        var x0, y0, r0
         $( document ).ready(function() {
             document.getElementById("btn").onclick =
                 function(){
-                    sendAjaxForm('results', 'math_form', 'calculation1.php');
+                    console.log(x0)
+                    console.log($('#Y'))
+                    console.log(r0)
+                    sendAjaxForm('results', 'math_form', 'Controller');
                     return false;
                 };
         });
 
         function sendAjaxForm(results, math_form, url) {
-            if(validate_form('math_form')){
+            //validate_form('math_form')
+            if(true){
                 document.getElementById('X').style.background = 'rgb(255, 255, 255)';
                 document.getElementById('Y').style.background = 'rgb(255, 255, 255)';
                 document.getElementById('R').style.background = 'rgb(255, 255, 255)';
+                console.log("Отправляем")
+                console.log(x0)
+                console.log($('#Y'))
+                console.log(r0)
                 $.post(
                     url, //url страницы (action_ajax_form.php)
                     {
-                        X: $('#X').val(),
+
+                        X: x0,
                         Y: $('#Y').val(),
-                        R: $('#R').val()
+                        R: r0
                     },
                     function(response) { //Данные отправлены успешно
                         document.getElementById("results").innerHTML = response;
@@ -37,17 +47,17 @@
         {
             valid = true;
 
-            if ((isNaN($('#X').val()))||($('#X').val() > 4)||($('#X').val() < -4))
+            if ((isNaN(x0)||(x0 == 0)||(x0 == -1)||(x0 == 1)||(x0 == -1.5)||(x0 == 1.5)||(x0 == 2)||(x0 == -2)||(x0 == -0.5)||(x0 == 0.5)))
             {
                 document.getElementById('X').style.background = 'rgb(255, 100, 100)';
                 valid = false;
             }
-            if ((isNaN($('#Y').val()))||($('#Y').val() > 3)||($('#Y').val() < -5))
+            if ((isNaN($('#Y').val()))||($('#Y').val() > 3)||($('#Y').val() < -3))
             {
                 document.getElementById('Y').style.background = 'rgb(255, 100, 100)';
                 valid = false;
             }
-            if ((isNaN($('#R').val()))||($('#R').val() > 5)||($('#R').val() < 1))
+            if (isNaN(r0)||(r0 == 1.5)||(r0 == 1)||(r0 == 2)||(r0 == 2.5)||(r0 == 3))
             {
                 document.getElementById('R').style.background = 'rgb(255, 100, 100)';
                 valid = false;
@@ -169,92 +179,126 @@
         <tr>
             <td width="20%">
                 <ul>
-                    <li height = "33%">
+                    <li id="X" height = "33%">
                         <span>X:</span>
-                        <select name="X" id="X" required>
-                            <option value=-4>-4</option>
-                            <option value=-3>-3</option>
-                            <option value=-2>-2</option>
-                            <option value=-1>-1</option>
-                            <option value=0>0</option>
-                            <option value=1>1</option>
-                            <option value=2>2</option>
-                            <option value=3>3</option>
-                            <option value=4>4</option>
-                        </select>
+                        <script>
+                            function xCheck(x) {
+                                console.log("Вызвали функцию xCheck")
+                                x0 = x
+                                console.log(x0)
+                            }
+                            function rCheck(r) {
+                                r0 = r
+                                console.log(r0)
+                            }
+                        </script>
+                        <button type="button" class="xValue" onclick="xCheck(-2)" value="-2">-2</button>
+                        <button class="xValue" type="button" onclick="xCheck(-1.5)" value="-1.5">-1.5</button>
+                        <button class="xValue" type="button" onclick="xCheck(-1)" value="-1">-1</button>
+                        <button class="xValue" type="button" onclick="xCheck(-0.5)" value="-0.5">-0.5</button>
+                        <button class="xValue" type="button" onclick="xCheck(0)" value="0">0</button>
+                        <button class="xValue" type="button" onclick="xCheck(0.5)" value="0.5">0.5</button>
+                        <button class="xValue" type="button" onclick="xCheck(1)" value="1">1</button>
+                        <button class="xValue" type="button" onclick="xCheck(1.5)" value="1.5">1.5</button>
+                        <button class="xValue" type="button" onclick="xCheck(2)" value="2">2</button>
+
                     </li height = "33%">
                     <li>
                         <span>Y:</span>
-                        <input height="89%" name="Y" id="Y" required placeholder="(-5 ... 3)">
+                        <input height="89%" name="Y" id="Y" required placeholder="(-3 ... 3)">
                     </li>
-                    <li height = "33%">
+                    <li id="R" height = "33%">
                         <span>R:</span>
-                        <select name="R" id="R" required>
-                            <option value=1>1</option>
-                            <option value=2>2</option>
-                            <option value=3>3</option>
-                            <option value=4>4</option>
-                            <option value=5>5</option>
-                        </select>
+                        <button class="rValue" type="button" onclick="rCheck(1)" value="1">1</button>
+                        <button class="rValue" type="button" onclick="rCheck(1.5)" value="1.5">1.5</button>
+                        <button class="rValue" type="button" onclick="rCheck(2)" value="2">2</button>
+                        <button class="rValue" type="button" onclick="rCheck(2.5)" value="2.5">2.5</button>
+                        <button class="rValue" type="button" onclick="rCheck(3)" value="3">3</button>
                     </li>
                 </ul>
                 <input type="submit" id="btn" value="Отправить">
             </td>
             <td width="30%">
-                                <canvas id="canvas" width="268" height="267">
-                                </canvas>
-                                <script>
-                                function getPosition(e){
-                                var x = y = 0;
+                <canvas id="canvas" width="268" height="267">
+                </canvas>
+                <script>
+                    function getPosition(e){
+                        var x = y = 0;
 
-                                if (!e) {
-                                var e = window.event;
-                                }
+                        if (!e) {
+                            var e = window.event;
+                        }
 
-                                if (e.pageX || e.pageY){
-                                x = e.pageX;
-                                y = e.pageY;
-                                } else if (e.clientX || e.clientY){
-                                x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-                                y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-                                }
+                        if (e.pageX || e.pageY){
+                            x = e.pageX;
+                            y = e.pageY;
+                        } else if (e.clientX || e.clientY){
+                            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+                            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+                        }
 
-                                return {x: x, y: y}
-                                }
-                                // Отслеживание события загрузки страницы
-                                window.addEventListener('load', function() {
-                                var cx = document.getElementById("canvas").getContext("2d");
-                                // Создание объекта картинки
-                                var img = new Image();
-                                // Назначение путь до картинки
-                                img.src = "${pageContext.request.contextPath}/images/pic2.png";
-                                // Вывод картинки
-                                cx.drawImage(img, 0, 0);
-                                $('body').mousemove(function(e){
+                        return {x: x, y: y}
+                    }
+
+                    function getCoords(elem) { // кроме IE8-
+                        var box = elem.getBoundingClientRect();
+
+                        return {
+                            top: box.top + pageYOffset,
+                            left: box.left + pageXOffset
+                        };
+
+                    }
+
+                    // Отслеживание события загрузки страницы
+                    window.addEventListener('load', function() {
+                        var cx = document.getElementById("canvas").getContext("2d");
+                        // Создание объекта картинки
+                        var img = new Image();
+                        // Назначение путь до картинки
+                        img.src = "${pageContext.request.contextPath}/images/pic2.png";
+                        // Вывод картинки
+                        cx.drawImage(img, 0, 0);
+                        $('body').mousemove(function(e){
+                            if(r0 != undefined){
                                 var cord = getPosition(e);
+                                var pos = getCoords(document.getElementById("canvas"));
                                 cx.clearRect(0,0,268,267);
                                 cx.drawImage(img, 0, 0);
-                                var R = 3;
+                                var R = r0;
                                 var cordX = 0;
+                                cord.x -= pos.left
+                                cord.y -= pos.top;
                                 var x = (((cord.x - 132)/102)*R*2).toFixed()/2;
+                                var y = (((cord.y - 133)/101)*(-1)*R)
                                 if(x > 2){
-                                x = 2;
+                                    x = 2;
                                 }
                                 if(x < -2){
-                                x = -2;
+                                    x = -2;
+                                }
+                                if(y > 3){
+                                    y = 3;
+                                }
+                                if(y < -3){
+                                    y = -3;
                                 }
                                 cordX = 132 + parseFloat((102*x/R).toFixed());
+                                cordY = 133 + parseFloat((-101*y/R).toFixed());
                                 cx.beginPath();
-                                cx.arc(cordX, cord.y, 3, 0, 2*Math.PI, false);
+                                cx.arc(cordX, cordY, 3, 0, 2*Math.PI, false);
                                 cx.fillStyle = 'red';
                                 cx.fill();
                                 cx.lineWidth = 1;
                                 cx.strokeStyle = 'red';
                                 cx.stroke();
                                 //console.log(cordX + " " + x + " " + cord.x + " " + cord.y);
-                                })
-                                });
-                                </script>
+                            } else {
+                                document.getElementById('R').style.background = 'rgb(255, 100, 100)';
+                            }
+                        })
+                    });
+                </script>
             </td>
             <td width="26%">
                 <span id="egg">Easter egg</span>
