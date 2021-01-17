@@ -27,7 +27,7 @@ public class Point implements Serializable {
     public Point() {}
 
     private boolean checkCoordinates(double x, double y, double r) {
-        return (x <= 0 && y >= 0 && x >= -r && y <= r) || (x <= 0 && y <= 0 && y >= (x + r/2)) ||
+        return (x <= 0 && y >= 0 && x >= -r && y <= r) || (x <= 0 && y <= 0 && y >= -1*(x + r/2)) ||
                 (x >= 0 && y <= 0 && x * x + y * y <= Math.pow(r, 2));
     }
 
