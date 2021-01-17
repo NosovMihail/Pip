@@ -29,10 +29,10 @@ function redrawGraph() {
     let outputContainer = document.getElementById("outputContainer");
     if (outputContainer !== null) outputContainer.parentNode.removeChild(outputContainer);
     rect.setAttribute("width", `${r * 24}`);
-    rect.setAttribute("height", `${r * 12}`);
+    rect.setAttribute("height", `${r * 24}`);
     rect.setAttribute("x", `${150 - r * 24}`);
-    rect.setAttribute("y", `${150 - r * 12}`);
-    triangle.setAttribute("points", `150,150 150,${150 - 24 * r} ${150 + 12 * r},150`);
+    rect.setAttribute("y", `${150 - r * 24}`);
+    triangle.setAttribute("points", `150,150 150,${150 + 12 * r} ${150 - 12 * r},150`);
     let k = (r !== 5) ? ((5 - r) * 12) : 0;
     path.setAttribute("d", `M 150 150 L ${150 + r * 24} 150 C ${150 + r * 24} ${210 - k} ${210 - k} ${150 + r * 24} 150 ${150 + r * 24} Z`);
     setTimeout(loadDots, 400); //нужно дождаться получения dom с обновлённой таблицей, иначе новая точка не появляется на графике - МЕГАКОСТЫЛЬ
