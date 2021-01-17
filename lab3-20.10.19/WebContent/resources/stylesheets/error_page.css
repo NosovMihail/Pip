@@ -1,0 +1,9 @@
+/* Взято и переработано с https://colorlib.com)*/
+
+h2 {
+    font-size: 33px;
+    font-weight: 200;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 3px;
+}

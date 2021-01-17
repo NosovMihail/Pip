@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="templates/temp_layout.xhtml">
+
+    <ui:define name="head">
+        <title>Лабораторная №3 - график</title>
+        <meta name="description" content="Лабораторная работа №3 по дисциплине веб-программирование - график"/>
+        <!---h:outputStylesheet library="stylesheets" name="app_page.css"/-->
+        <!---h:outputStylesheet library="stylesheets" name="check_button.css"/-->
+    </ui:define>
+
+    <ui:define name="content">
+            <table id="mainTable" class="shaded">
+                <thead>
+                <tr><td colspan="7"><h3>Валидация введённых значений:</h3></td></tr>
+                </thead>
+                <tbody>
+                <h:form id="form" prependId="false">
+                <tr><td colspan="7"><hr/></td></tr>
+                <tr>
+                    <td>Выберите X:</td>
+                    <td colspan="5">
+                        <p:slider type="range" min="-5" max="5" step="1" value="0" onchange="reactToChangeX(this.value)"></p:slider>
+                    </td>
+                    <td rowspan="2">
+                            <svg id="graph" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="0" y1="150" x2="300" y2="150" stroke="#000720"/>
+                                <line x1="150" y1="0" x2="150" y2="300" stroke="#000720"/>
+                                <polygon points="300,150 295,155 295, 145" fill="#000720" stroke="#000720"/>
+                                <polygon points="150,0 145,5 155,5" fill="#000720" stroke="#000720"/>
+                                <rect id="rect" x="30" y="30" width="120" height="120" fill-opacity="0.4" stroke="navy" fill="blue"/>
+                                <polygon id="triangle" points="150,150 150,210 90,150" fill-opacity="0.4" stroke="navy" fill="blue"/>
+                                <path id="path" d="M 150 150 L 270 150 C 270 210 210 270 150 270 Z" fill-opacity="0.4" stroke="navy" fill="blue"/>
+                            </svg>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Введите Y:</td>
+                    <td colspan="5"><input id="Y-input" class="illuminated animated" type="text"  maxlength="6"/></td>
+                </tr>
+                <tr>
+                    <td>Выберите R:</td>
+                    <td><h:commandButton type="button" styleClass="illuminated animated commandButtonsGroup" value="1"/></td>
+                    <td><h:commandButton type="button" styleClass="illuminated animated commandButtonsGroup" value="2"/></td>
+                    <td><h:commandButton type="button" styleClass="illuminated animated commandButtonsGroup" value="3"/></td>
+                    <td><h:commandButton type="button" styleClass="illuminated animated commandButtonsGroup" value="4"/></td>
+                    <td><h:commandButton type="button" styleClass="illuminated animated commandButtonsGroup" value="5"/></td>
+                    <td><h:link value="Вернуться на домашную страницу" outcome="index.xhtml"/></td>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <p:remoteCommand name="sendRequest" update="resTable" action="#{realHuman.validate}"/>
+                        <button id="checkButton" type="button">Проверить</button>
+                        <hr/>
+                    </td>
+                </tr>
+                </h:form>
+                </tbody>
+                <tfoot>
+                <tr id="outputContainer"><td colspan="7"><h4><span class="outputStub notification">Результаты отсутствуют</span></h4></td></tr>
+                <tr>
+                    <td colspan="7">
+                            <h:dataTable value="#{realHuman.points}" var="p" id="resTable">
+                                <h:column>
+                                    <f:facet name="header">x</f:facet>
+                                    #{p.x}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">y</f:facet>
+                                    #{p.y}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">r</f:facet>
+                                    #{p.r}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Точка входит в ОДЗ</f:facet>
+                                    #{p.coordsStatus}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Дата запроса</f:facet>
+                                    #{p.bornDate}
+                                </h:column>
+                            </h:dataTable>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        <h:outputScript library="js" name="js/validator.js"/>
+        <h:outputScript library="js" name="graph_drawer.js"/>
+    </ui:define>
+
+</ui:composition>
+
+</html>
